@@ -109,8 +109,8 @@ python main.py
 
 ```bash
 # 1. GitHub からクローン
-git clone https://github.com/<あなたのユーザー名>/<リポジトリ名>.git
-cd <リポジトリ名>
+git clone https://github.com/mogura501/driving-support-system.git
+cd driving-support-system
 
 # 2. セットアップスクリプトを実行（全自動）
 chmod +x setup_raspi.sh
