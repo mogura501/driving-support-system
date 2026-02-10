@@ -1,0 +1,22 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# MediaPipe モデル (初回起動時 or setup_raspi.sh で自動ダウンロード)
+models/
+
+# 音声ファイル (初回起動時に自動生成)
+sounds/
+
+# キャリブレーションデータ (個人設定)
+calibration_data.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

@@ -1,0 +1,10 @@
+# Raspberry Pi 4 (aarch64) 用
+# mediapipe は 0.10.18 が aarch64 wheel 提供の最終版
+# (0.10.20以降は x86_64 のみ)
+mediapipe==0.10.18
+numpy>=1.24.0
+pygame>=2.5.0
+Pillow>=10.0.0
+# OpenCV は apt の python3-opencv を推奨 (setup_raspi.sh 参照)
+# pip からインストールする場合は以下を有効化:
+# opencv-python-headless>=4.8.0

@@ -1,0 +1,28 @@
+{
+  "camera": {
+    "device_id": 0,
+    "width": 640,
+    "height": 480,
+    "fps": 15
+  },
+  "eye_detection": {
+    "default_ear_threshold": 0.2,
+    "closed_duration_threshold_sec": 1.0,
+    "ear_smoothing_frames": 3
+  },
+  "calibration": {
+    "countdown_sec": 3,
+    "measurement_frames": 10
+  },
+  "alarm": {
+    "sound_file": "sounds/alarm.wav",
+    "beep_file": "sounds/beep.wav",
+    "volume": 0.8
+  },
+  "ui": {
+    "fullscreen": true,
+    "window_width": 800,
+    "window_height": 480,
+    "show_fps": true
+  }
+}
