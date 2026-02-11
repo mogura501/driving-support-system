@@ -1,12 +1,11 @@
 """メイン GUI モジュール
 
-tkinter を使用した 800×480 タッチ最適化 UI。
-カメラ映像の表示、検知モード制御、校正、カウンター、シャットダウンを統合する。
+tkinter を使用した 800×480 UI。（PC専用版）
+カメラ映像の表示、検知モード制御、校正、カウンターを統合する。
 """
 
 import os
 import platform
-import subprocess
 import threading
 import time
 import tkinter as tk
@@ -276,14 +275,14 @@ class DrivingSupportApp:
         spacer = tk.Frame(right, bg=COLOR_BG)
         spacer.pack(fill=tk.BOTH, expand=True)
 
-        # -- シャットダウンボタン（最下部） --
-        self.btn_shutdown = tk.Button(
-            right, text="⏻  シャットダウン", font=(_FONT, 11),
+        # -- 終了ボタン（最下部） --
+        self.btn_quit = tk.Button(
+            right, text="⏻  終了", font=(_FONT, 11),
             bg=COLOR_SHUTDOWN, fg="#ffcccc", activebackground="#660000",
             activeforeground=COLOR_TEXT, relief=tk.FLAT, bd=0,
-            height=1, command=self._shutdown_confirm,
+            height=1, command=self._quit_confirm,
         )
-        self.btn_shutdown.pack(fill=tk.X, pady=(6, 2))
+        self.btn_quit.pack(fill=tk.X, pady=(6, 2))
 
     def _build_calibration_overlay(self):
         """校正用のオーバーレイフレーム（非表示で生成）"""
@@ -583,27 +582,17 @@ class DrivingSupportApp:
         self._hide_calibration_overlay()
 
     # =================================================================
-    # シャットダウン
+    # 終了
     # =================================================================
-    def _shutdown_confirm(self):
-        """シャットダウン確認ダイアログ"""
+    def _quit_confirm(self):
+        """終了確認ダイアログ"""
         answer = messagebox.askyesno(
-            "シャットダウン",
-            "本当にシャットダウンしますか？",
+            "終了",
+            "アプリケーションを終了しますか？",
             icon="warning",
         )
         if answer:
-            self._do_shutdown()
-
-    def _do_shutdown(self):
-        """リソース解放してシャットダウン（PC はアプリ終了のみ）"""
-        self._cleanup()
-        if Config.is_raspberry_pi():
-            try:
-                subprocess.run(["sudo", "shutdown", "-h", "now"], check=False)
-            except Exception as e:
-                print(f"[ERROR] シャットダウン失敗: {e}")
-        else:
+            self._cleanup()
             self.root.destroy()
 
     # =================================================================

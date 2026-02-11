@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """運転サポートシステム - エントリーポイント
 
-Raspberry Pi 4 / PC 共通で動作する居眠り検知システム。
+PC 専用の居眠り検知システム。
 MediaPipe Face Landmarker を使用して目の開閉を判定し、
 1秒以上の閉眼でアラームを鳴動する。
 """
@@ -105,7 +105,7 @@ def main():
     parser = argparse.ArgumentParser(description="運転サポートシステム")
     parser.add_argument(
         "--config", type=str, default=None,
-        help="使用する設定ファイル名 (例: config_raspi.json)"
+        help="使用する設定ファイル名 (例: config.json)"
     )
     args = parser.parse_args()
 
@@ -118,7 +118,7 @@ def main():
     if not check_dependencies():
         sys.exit(1)
 
-    # 2. 設定読み込み（--config 指定 or プラットフォーム自動検出）
+    # 2. 設定読み込み
     config = Config(BASE_DIR, config_file=args.config)
     platform_name = config.get_platform()
     print(f"[INFO] プラットフォーム: {platform_name}")

@@ -1,6 +1,6 @@
 """設定管理モジュール
 
-config.json の読み込みと、プラットフォーム判定を担当する。
+config.json の読み込みを担当する。（PC専用版）
 """
 
 import json
@@ -14,12 +14,9 @@ class Config:
     def __init__(self, base_dir: str, config_file: str = None):
         self.base_dir = base_dir
 
-        # 設定ファイルの選択: 引数指定 > ラズパイ自動検出 > デフォルト
+        # 設定ファイルの選択
         if config_file:
             config_path = os.path.join(base_dir, config_file)
-        elif Config.is_raspberry_pi():
-            pi_path = os.path.join(base_dir, "config_raspi.json")
-            config_path = pi_path if os.path.exists(pi_path) else os.path.join(base_dir, "config.json")
         else:
             config_path = os.path.join(base_dir, "config.json")
 
@@ -62,21 +59,9 @@ class Config:
     def model_path(self) -> str:
         return os.path.normpath(self.resolve_path("models/face_landmarker.task"))
 
-    # --- プラットフォーム判定 ---
-    @staticmethod
-    def is_raspberry_pi() -> bool:
-        """Raspberry Pi 上で動作しているか判定する"""
-        try:
-            with open("/proc/device-tree/model", "r") as f:
-                return "raspberry pi" in f.read().lower()
-        except (FileNotFoundError, PermissionError):
-            return False
-
     @staticmethod
     def get_platform() -> str:
         """プラットフォーム文字列を返す"""
-        if Config.is_raspberry_pi():
-            return "raspi"
         return platform.system().lower()  # 'windows', 'darwin', 'linux'
 
 

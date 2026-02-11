@@ -4,7 +4,7 @@ __pycache__/
 *.pyc
 *.pyo
 
-# MediaPipe モデル (初回起動時 or setup_raspi.sh で自動ダウンロード)
+# MediaPipe モデル (初回起動時に自動ダウンロード)
 models/
 
 # 音声ファイル (初回起動時に自動生成)

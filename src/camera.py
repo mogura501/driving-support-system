@@ -1,8 +1,7 @@
 """カメラ制御モジュール
 
 OpenCV VideoCapture のラッパー。
-カメラの初期化・フレーム取得・解放を担当する。
-Raspberry Pi Camera Module / USB カメラの両方に対応。
+カメラの初期化・フレーム取得・解放を担当する。（PC専用版）
 """
 
 import platform
@@ -20,7 +19,6 @@ class Camera:
         self.height = config.camera.get("height", 480)
         self.fps = config.camera.get("fps", 30)
         self.cap = None
-        self._is_raspi = config.is_raspberry_pi()
 
     def open(self, timeout_sec: float = 8.0) -> bool:
         """カメラを開く。成功したら True を返す。
@@ -32,15 +30,6 @@ class Camera:
             if platform.system() == "Windows":
                 # Windows: DirectShow バックエンドでハング回避
                 self.cap = cv2.VideoCapture(self.device_id, cv2.CAP_DSHOW)
-            elif self._is_raspi:
-                # Raspberry Pi: 複数バックエンドを順に試す
-                #  1. V4L2 (USB カメラ / Pi Camera with libcamera-v4l2)
-                #  2. デフォルト
-                for backend in (cv2.CAP_V4L2, cv2.CAP_ANY):
-                    self.cap = cv2.VideoCapture(self.device_id, backend)
-                    if self.cap.isOpened():
-                        break
-                    self.cap.release()
             else:
                 self.cap = cv2.VideoCapture(self.device_id)
             result[0] = self.cap is not None and self.cap.isOpened()
